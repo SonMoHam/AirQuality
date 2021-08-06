@@ -3,19 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1265880126BD449C002C7BD8 /* MyAlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1265880026BD449C002C7BD8 /* MyAlamofireManager.swift */; };
 		12F9FAC226BC114F00A6A7A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F9FAC126BC114F00A6A7A1 /* AppDelegate.swift */; };
 		12F9FAC426BC114F00A6A7A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F9FAC326BC114F00A6A7A1 /* SceneDelegate.swift */; };
 		12F9FAC626BC114F00A6A7A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F9FAC526BC114F00A6A7A1 /* ViewController.swift */; };
 		12F9FAC926BC114F00A6A7A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12F9FAC726BC114F00A6A7A1 /* Main.storyboard */; };
 		12F9FACB26BC114F00A6A7A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12F9FACA26BC114F00A6A7A1 /* Assets.xcassets */; };
 		12F9FACE26BC114F00A6A7A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12F9FACC26BC114F00A6A7A1 /* LaunchScreen.storyboard */; };
+		C4317F858F00432C34A6A6E2 /* Pods_mvl_AirQuality.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7435025A8969C5547BB6779 /* Pods_mvl_AirQuality.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0534F35C5A488285BFA6194B /* Pods-mvl-AirQuality.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mvl-AirQuality.debug.xcconfig"; path = "Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality.debug.xcconfig"; sourceTree = "<group>"; };
+		1265880026BD449C002C7BD8 /* MyAlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlamofireManager.swift; sourceTree = "<group>"; };
 		12F9FABE26BC114F00A6A7A1 /* mvl-AirQuality.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mvl-AirQuality.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		12F9FAC126BC114F00A6A7A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12F9FAC326BC114F00A6A7A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +28,8 @@
 		12F9FACA26BC114F00A6A7A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		12F9FACD26BC114F00A6A7A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		12F9FACF26BC114F00A6A7A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		281F98B780D14C6B0B379046 /* Pods-mvl-AirQuality.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mvl-AirQuality.release.xcconfig"; path = "Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality.release.xcconfig"; sourceTree = "<group>"; };
+		A7435025A8969C5547BB6779 /* Pods_mvl_AirQuality.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mvl_AirQuality.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4317F858F00432C34A6A6E2 /* Pods_mvl_AirQuality.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				12F9FAC026BC114F00A6A7A1 /* mvl-AirQuality */,
 				12F9FABF26BC114F00A6A7A1 /* Products */,
+				CE518E3357003D00D0DABA10 /* Pods */,
+				EE6AD9E33F2EBCF1E223C59B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +72,26 @@
 				12F9FACA26BC114F00A6A7A1 /* Assets.xcassets */,
 				12F9FACC26BC114F00A6A7A1 /* LaunchScreen.storyboard */,
 				12F9FACF26BC114F00A6A7A1 /* Info.plist */,
+				1265880026BD449C002C7BD8 /* MyAlamofireManager.swift */,
 			);
 			path = "mvl-AirQuality";
+			sourceTree = "<group>";
+		};
+		CE518E3357003D00D0DABA10 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0534F35C5A488285BFA6194B /* Pods-mvl-AirQuality.debug.xcconfig */,
+				281F98B780D14C6B0B379046 /* Pods-mvl-AirQuality.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EE6AD9E33F2EBCF1E223C59B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7435025A8969C5547BB6779 /* Pods_mvl_AirQuality.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +101,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 12F9FAD226BC114F00A6A7A1 /* Build configuration list for PBXNativeTarget "mvl-AirQuality" */;
 			buildPhases = (
+				6C1132FD78F9D61462E53CD4 /* [CP] Check Pods Manifest.lock */,
 				12F9FABA26BC114F00A6A7A1 /* Sources */,
 				12F9FABB26BC114F00A6A7A1 /* Frameworks */,
 				12F9FABC26BC114F00A6A7A1 /* Resources */,
+				E7780CEAC8130C755E0FDBDC /* [CP] Embed Pods Frameworks */,
+				93359A59695623C3535235BC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -132,11 +162,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6C1132FD78F9D61462E53CD4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-mvl-AirQuality-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		93359A59695623C3535235BC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7780CEAC8130C755E0FDBDC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		12F9FABA26BC114F00A6A7A1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1265880126BD449C002C7BD8 /* MyAlamofireManager.swift in Sources */,
 				12F9FAC626BC114F00A6A7A1 /* ViewController.swift in Sources */,
 				12F9FAC226BC114F00A6A7A1 /* AppDelegate.swift in Sources */,
 				12F9FAC426BC114F00A6A7A1 /* SceneDelegate.swift in Sources */,
@@ -283,6 +373,7 @@
 		};
 		12F9FAD326BC114F00A6A7A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0534F35C5A488285BFA6194B /* Pods-mvl-AirQuality.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -301,6 +392,7 @@
 		};
 		12F9FAD426BC114F00A6A7A1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 281F98B780D14C6B0B379046 /* Pods-mvl-AirQuality.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
