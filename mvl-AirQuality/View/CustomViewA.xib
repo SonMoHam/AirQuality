@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomViewA" customModule="mvl_AirQuality" customModuleProvider="target">
+            <connections>
+                <outlet property="pointALabel" destination="IRe-aM-HKm" id="tlz-E6-TZ7"/>
+                <outlet property="pointBLabel" destination="tIg-Yy-UKe" id="p8B-Lc-CVM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="WFM-Ye-zh4">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="point a" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRe-aM-HKm">
+                    <rect key="frame" x="20" y="64" width="374" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="point b" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIg-Yy-UKe">
+                    <rect key="frame" x="20" y="104.5" width="374" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="GBc-fr-vqY">
+                    <rect key="frame" x="157" y="692" width="100" height="150"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWS-RW-aIm">
+                            <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="igC-Vg-D0R"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Set point a"/>
+                            <connections>
+                                <action selector="onSetPointAButtonClicked:" destination="-1" eventType="touchUpInside" id="eJ0-tr-YrK"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZeB-fT-G1d">
+                            <rect key="frame" x="0.0" y="60" width="100" height="30"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="u0B-lo-W33"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Set point b"/>
+                            <connections>
+                                <action selector="onSetPointBButtonClicked:" destination="-1" eventType="touchUpInside" id="qC4-re-dte"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHq-ZJ-E0V">
+                            <rect key="frame" x="0.0" y="120" width="100" height="30"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="PF7-gO-Eky"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Clear"/>
+                            <connections>
+                                <action selector="onClearButtonClicked:" destination="-1" eventType="touchUpInside" id="VL9-5L-VhM"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="foV-OV-AOl"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="tIg-Yy-UKe" firstAttribute="top" secondItem="IRe-aM-HKm" secondAttribute="bottom" constant="20" id="Gw7-GV-yhK"/>
+                <constraint firstItem="IRe-aM-HKm" firstAttribute="top" secondItem="foV-OV-AOl" secondAttribute="top" constant="20" id="Ner-5Y-VAb"/>
+                <constraint firstItem="foV-OV-AOl" firstAttribute="trailing" secondItem="tIg-Yy-UKe" secondAttribute="trailing" constant="20" id="ezZ-S8-QZ4"/>
+                <constraint firstItem="foV-OV-AOl" firstAttribute="bottom" secondItem="GBc-fr-vqY" secondAttribute="bottom" constant="20" id="ikS-vh-GjE"/>
+                <constraint firstItem="foV-OV-AOl" firstAttribute="trailing" secondItem="IRe-aM-HKm" secondAttribute="trailing" constant="20" id="mA6-uP-flB"/>
+                <constraint firstItem="IRe-aM-HKm" firstAttribute="leading" secondItem="foV-OV-AOl" secondAttribute="leading" constant="20" id="nwT-wr-TKM"/>
+                <constraint firstItem="GBc-fr-vqY" firstAttribute="centerX" secondItem="WFM-Ye-zh4" secondAttribute="centerX" id="oRs-ad-Z7S"/>
+                <constraint firstItem="tIg-Yy-UKe" firstAttribute="leading" secondItem="foV-OV-AOl" secondAttribute="leading" constant="20" id="tK1-vR-rix"/>
+            </constraints>
+            <point key="canvasLocation" x="275" y="63"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
