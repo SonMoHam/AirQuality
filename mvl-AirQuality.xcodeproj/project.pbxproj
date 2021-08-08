@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		126026E526BFC188006057E2 /* LocationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126026E426BFC188006057E2 /* LocationRouter.swift */; };
 		1264A4C526BDEBF00081AFF7 /* CustomViewA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1264A4C426BDEBF00081AFF7 /* CustomViewA.xib */; };
 		1264A4C826BDEEA30081AFF7 /* CustomViewA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264A4C726BDEEA30081AFF7 /* CustomViewA.swift */; };
 		1264A4CB26BDF47F0081AFF7 /* CustomViewB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1264A4CA26BDF47F0081AFF7 /* CustomViewB.xib */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		0534F35C5A488285BFA6194B /* Pods-mvl-AirQuality.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mvl-AirQuality.debug.xcconfig"; path = "Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality.debug.xcconfig"; sourceTree = "<group>"; };
+		126026E426BFC188006057E2 /* LocationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRouter.swift; sourceTree = "<group>"; };
 		1264A4C426BDEBF00081AFF7 /* CustomViewA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomViewA.xib; sourceTree = "<group>"; };
 		1264A4C726BDEEA30081AFF7 /* CustomViewA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewA.swift; sourceTree = "<group>"; };
 		1264A4CA26BDF47F0081AFF7 /* CustomViewB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomViewB.xib; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				1265880026BD449C002C7BD8 /* MyAlamofireManager.swift */,
 				12761CAB26BE896000952AEA /* Constants.swift */,
 				12761CAE26BE8CA700952AEA /* CustomViewProtocol.swift */,
+				126026E426BFC188006057E2 /* LocationRouter.swift */,
 			);
 			path = "mvl-AirQuality";
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				12761CAF26BE8CA700952AEA /* CustomViewProtocol.swift in Sources */,
 				1264A4CE26BDF4890081AFF7 /* CustomViewB.swift in Sources */,
 				12F9FAC426BC114F00A6A7A1 /* SceneDelegate.swift in Sources */,
+				126026E526BFC188006057E2 /* LocationRouter.swift in Sources */,
 				1264A4D126BDFA9B0081AFF7 /* CustomViewC.swift in Sources */,
 				12761CAC26BE896000952AEA /* Constants.swift in Sources */,
 			);

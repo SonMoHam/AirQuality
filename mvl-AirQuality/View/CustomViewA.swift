@@ -33,9 +33,6 @@ class CustomViewA: UIView {
         }
     }
     
-
-
-    
     
     @IBAction func onSetPointAButtonClicked(_ sender: Any) {
         delegate?.sendCustomViewButtonIsClicked(buttonName: BUTTON_NAME.CUSTOM_VIEW_A.POINT_A)

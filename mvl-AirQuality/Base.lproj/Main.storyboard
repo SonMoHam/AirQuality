@@ -25,9 +25,6 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="view a"/>
-                                        <connections>
-                                            <action selector="onSetPointAButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GDR-9G-XWB"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BpY-fB-ee8">
                                         <rect key="frame" x="134.5" y="0.0" width="125" height="34"/>
@@ -35,9 +32,6 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="view b"/>
-                                        <connections>
-                                            <action selector="onSetPointBButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EOE-Od-B2Z"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cum-IZ-uhm">
                                         <rect key="frame" x="269.5" y="0.0" width="124.5" height="34"/>
@@ -45,9 +39,6 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="view c"/>
-                                        <connections>
-                                            <action selector="onClearButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vWW-cv-R3D"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
