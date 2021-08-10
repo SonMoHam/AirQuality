@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		120DA83326C2521600176FBE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120DA83226C2521600176FBE /* Model.swift */; };
+		120DA83A26C27F2000176FBE /* MyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 120DA83926C27F2000176FBE /* MyTableViewCell.xib */; };
+		120DA83D26C27F2C00176FBE /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120DA83C26C27F2C00176FBE /* MyTableViewCell.swift */; };
 		126026E526BFC188006057E2 /* LocationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126026E426BFC188006057E2 /* LocationRouter.swift */; };
 		1264A4C526BDEBF00081AFF7 /* CustomViewA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1264A4C426BDEBF00081AFF7 /* CustomViewA.xib */; };
 		1264A4C826BDEEA30081AFF7 /* CustomViewA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264A4C726BDEEA30081AFF7 /* CustomViewA.swift */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		0534F35C5A488285BFA6194B /* Pods-mvl-AirQuality.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mvl-AirQuality.debug.xcconfig"; path = "Target Support Files/Pods-mvl-AirQuality/Pods-mvl-AirQuality.debug.xcconfig"; sourceTree = "<group>"; };
 		120DA83226C2521600176FBE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		120DA83926C27F2000176FBE /* MyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTableViewCell.xib; sourceTree = "<group>"; };
+		120DA83C26C27F2C00176FBE /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		126026E426BFC188006057E2 /* LocationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRouter.swift; sourceTree = "<group>"; };
 		1264A4C426BDEBF00081AFF7 /* CustomViewA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomViewA.xib; sourceTree = "<group>"; };
 		1264A4C726BDEEA30081AFF7 /* CustomViewA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewA.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				12761CAE26BE8CA700952AEA /* CustomViewProtocol.swift */,
 				126026E426BFC188006057E2 /* LocationRouter.swift */,
 				120DA83226C2521600176FBE /* Model.swift */,
+				120DA83926C27F2000176FBE /* MyTableViewCell.xib */,
+				120DA83C26C27F2C00176FBE /* MyTableViewCell.swift */,
 			);
 			path = "mvl-AirQuality";
 			sourceTree = "<group>";
@@ -205,6 +211,7 @@
 				12F9FACE26BC114F00A6A7A1 /* LaunchScreen.storyboard in Resources */,
 				12F9FACB26BC114F00A6A7A1 /* Assets.xcassets in Resources */,
 				12F9FAC926BC114F00A6A7A1 /* Main.storyboard in Resources */,
+				120DA83A26C27F2000176FBE /* MyTableViewCell.xib in Resources */,
 				1264A4C526BDEBF00081AFF7 /* CustomViewA.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +287,7 @@
 				12F9FAC226BC114F00A6A7A1 /* AppDelegate.swift in Sources */,
 				1264A4C826BDEEA30081AFF7 /* CustomViewA.swift in Sources */,
 				12761CAF26BE8CA700952AEA /* CustomViewProtocol.swift in Sources */,
+				120DA83D26C27F2C00176FBE /* MyTableViewCell.swift in Sources */,
 				1264A4CE26BDF4890081AFF7 /* CustomViewB.swift in Sources */,
 				12F9FAC426BC114F00A6A7A1 /* SceneDelegate.swift in Sources */,
 				126026E526BFC188006057E2 /* LocationRouter.swift in Sources */,

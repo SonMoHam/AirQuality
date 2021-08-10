@@ -46,7 +46,6 @@ enum LocationRouter: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         
         let url = baseURL + endpoint + paramString
-        print("url: \(url)")
         var request = URLRequest(url: URL(string: url)!)
         request.method = method
         return request

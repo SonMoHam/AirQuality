@@ -13,6 +13,6 @@ struct LocationInfo {
     var AQI: String?
     
     func getInfoString() -> String {
-        return "\(coor ?? "") \n Adress: \(adress ?? "") \n AQI: \(AQI ?? "")"
+        return "\(coor ?? "")\nAdress: \(adress ?? "")\nAQI: \(AQI ?? "")"
     }
 }

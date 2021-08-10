@@ -17,11 +17,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager: CLLocationManager!
     let mapMarker = GMSMarker()
     var mapView: GMSMapView?
+    var myTableView: UITableView?
     var disposeBag = DisposeBag()
     var pointA: String?
     var pointB: String?
     var tempInfo: LocationInfo = LocationInfo()
     
+    var list: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +40,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // 카메라 세팅
         configMapView(latitude: latitude, longitude: longitude)
-        
+        configMyTableView()
         // 마커 세팅
         mapMarker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         mapMarker.map = mapView
@@ -46,7 +48,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // 타이틀, 스니펫 띄우기
         mapView?.selectedMarker = mapMarker
         let viewFrame = CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height)
+        
         showCustomView(CustomViewA(frame: viewFrame))
+        
     }
     
     // MARK: - fileprivate func - config
@@ -65,11 +69,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     fileprivate func configMapView(latitude: Double, longitude: Double) {
         let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 16.0)
-        let mapFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - 100)
+        let mapFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.view.frame.height - 100) / 2 )
         mapView = GMSMapView.map(withFrame: mapFrame, camera: camera)
         mapView?.delegate = self
     }
     
+    fileprivate func configMyTableView() {
+        let tableFrame = CGRect(x: 0, y: (self.view.frame.height - 100) / 2, width: self.view.frame.width, height: (self.view.frame.height - 100) / 2)
+        myTableView = UITableView()
+        let myTableViewCellNib = UINib(nibName: String(describing: MyTableViewCell.self), bundle: nil)
+        
+        myTableView?.register(myTableViewCellNib, forCellReuseIdentifier: "myTableViewCell")
+        
+        myTableView?.rowHeight = UITableView.automaticDimension
+        myTableView?.estimatedRowHeight = 120
+        
+        myTableView?.delegate = self
+        myTableView?.dataSource = self
+
+        myTableView?.translatesAutoresizingMaskIntoConstraints = false
+//
+//        myTableView?.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+//        myTableView?.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        myTableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        myTableView?.frame = tableFrame
+
+    }
 }
 
 // MARK: - CustomViewProtocol 
@@ -85,7 +110,9 @@ extension ViewController: CustomViewProtocol {
             let viewB = CustomViewB(frame: viewFrame)
             viewB.delegate = self
             viewB.myClosure = { [weak self] in
-                self?.pointA = "point a \n \(self?.tempInfo.getInfoString() ?? "")"
+                let str = self?.tempInfo.getInfoString() ?? ""
+                self?.pointA = "point a \n" + str
+                self?.list.append(str)
             }
             showCustomView(viewB)
             
@@ -94,7 +121,9 @@ extension ViewController: CustomViewProtocol {
             let viewB = CustomViewB(frame: viewFrame)
             viewB.delegate = self
             viewB.myClosure = { [weak self] in
-                self?.pointB = "point b \n \(self?.tempInfo.getInfoString() ?? "")"
+                let str = self?.tempInfo.getInfoString() ?? ""
+                self?.pointB = "point b \n" + str
+                self?.list.append(str)
             }
             showCustomView(viewB)
             
@@ -142,6 +171,8 @@ extension ViewController {
                 self.view.addSubview(viewB)
             }) { [weak self] _ in
                 viewB.addSubview((self?.mapView!)!)
+                self?.myTableView?.reloadData()
+                viewB.addSubview((self?.myTableView!)!)
             }
             
         } else if v is CustomViewC {
@@ -186,7 +217,7 @@ extension ViewController: GMSMapViewDelegate {
         let lat = mapMarker.position.latitude as Double
         let long = mapMarker.position.longitude as Double
         
-        self.tempInfo.coor = "lat: \(lat)\n long: \(long)"
+        self.tempInfo.coor = "lat: \(lat)\nlong: \(long)"
         
         MyAlamofireManager.shared.getLocationAdressRx(latitude: lat, longitude: long)
             .map { $0.sorted{ $0["order"].intValue > $1["order"].intValue }}
@@ -205,30 +236,36 @@ extension ViewController: GMSMapViewDelegate {
                 self?.mapMarker.snippet = "AQI: \(result)"
             })
             .disposed(by: disposeBag)
-        
-        //        MyAlamofireManager.shared.getLocationAQI(latitude: lat, longitude: long) { [weak self] result in
-        //            print(type(of: result))     // JSON
-        //            print("aqi: \(result)")
-        //
-        //            self?.tempInfo.AQI = "\(result)"
-        //            self?.mapMarker.snippet = "AQI: \(result)"
-        //        }
-        
-        //        MyAlamofireManager.shared.getLocationInfo(latitude: lat, longitude: long) { [weak self] result in
-        //            print(type(of: result))     // Array<JSON>
-        //            let sorted = result.sorted { (first, second) -> Bool in
-        //                return first["order"].intValue > second["order"].intValue
-        //            }
-        //            sorted.forEach {
-        //                print($0["order"], terminator: ", ")
-        //            }
-        //            let str = "\(sorted[1]["name"]) \(sorted[0]["name"])"
-        //            print(str)
-        //
-        //            self?.tempInfo.adress = str
-        //            self?.mapMarker.title = str
-        //        }
     }
 }
 
+// MARK: - TableView Delegate
+extension ViewController: UITableViewDelegate {
+    
+}
 
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return list.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = myTableView?.dequeueReusableCell(withIdentifier: "myTableViewCell", for: indexPath) as! MyTableViewCell
+        cell.content = list[indexPath.row]
+        cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let content = list[indexPath.row]
+
+        let splited = content.split(separator: "\n")
+        let lat = Double(splited[0].split(separator: " ")[1]) ?? 0
+        let long = Double(splited[1].split(separator: " ")[1]) ?? 0
+        
+        let cameraPosition = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 16.0)
+        mapView?.camera = cameraPosition
+        mapMarker.position = cameraPosition.target
+        mapView?.reloadInputViews()
+    }
+}
