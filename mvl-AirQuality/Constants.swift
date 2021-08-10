@@ -21,9 +21,8 @@ enum BUTTON_NAME {
     enum CUSTOM_VIEW_C {
         static let BACK = "back"
     }
-    
-    
 }
+
 enum API {
     enum AIQ {
         static let BASE_URL = "https://api.waqi.info"

@@ -9,34 +9,29 @@ import UIKit
 import GoogleMaps
 import CoreLocation
 import MapKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    
+
     var locationManager: CLLocationManager!
     let mapMarker = GMSMarker()
     var mapView: GMSMapView?
+    
     var pointA: String?
     var pointB: String?
-    var tempCoor: String?
-    var tempAdress: String? {
-        didSet {
-            mapMarker.title = tempAdress
-        }
-    }
-    var tempAQI: String? {
-        didSet {
-            mapMarker.snippet = "AQI: " + tempAQI!
-        }
-    }
+    var tempInfo: LocationInfo = LocationInfo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
         configLocationManager()
         // 위, 경도 가져오기
         let coor = locationManager.location?.coordinate
-//                let latitude = (coor?.latitude ?? 37.566508) as Double
-//                let longitude = (coor?.longitude ?? 126.977945) as Double
+        //                let latitude = (coor?.latitude ?? 37.566508) as Double
+        //                let longitude = (coor?.longitude ?? 126.977945) as Double
         
         let latitude = 37.566508 as Double
         let longitude = 126.977945 as Double
@@ -46,10 +41,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // 마커 세팅
         mapMarker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        //        mapMarker.title = "title"
-        //        mapMarker.snippet = "snippet"
         mapMarker.map = mapView
-        showCustomViewA()
+        let viewFrame = CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height)
+        showCustomView(CustomViewA(frame: viewFrame))
     }
     
     // MARK: - fileprivate func
@@ -67,10 +61,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     fileprivate func configMapView(latitude: Double, longitude: Double) {
-        let lat = latitude
-        let long = longitude
-        
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 16.0)
+        let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 16.0)
         let mapFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - 100)
         mapView = GMSMapView.map(withFrame: mapFrame, camera: camera)
         mapView?.delegate = self
@@ -81,42 +72,48 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 // MARK: - CustomViewProtocol 
 extension ViewController: CustomViewProtocol {
     func sendCustomViewButtonIsClicked(buttonName: String) {
+        
+        let viewFrame = CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height)
+        
         switch buttonName {
+        
         case BUTTON_NAME.CUSTOM_VIEW_A.POINT_A:
             print("setPointA")
-            let view = CustomViewB(frame: CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height))
-            view.delegate = self
-            view.myClosure = { [weak self] in
-                self?.pointA = "pointA \n \(self?.tempCoor ?? "") \n Adress \(self?.tempAdress ?? "") \n AQI \(self?.tempAQI ?? "")"
+            let viewB = CustomViewB(frame: viewFrame)
+            viewB.delegate = self
+            viewB.myClosure = { [weak self] in
+                self?.pointA = "point a \n \(self?.tempInfo.getInfoString() ?? "")"
             }
-            showCustomViewB(view)
+            showCustomView(viewB)
             
         case BUTTON_NAME.CUSTOM_VIEW_A.POINT_B:
             print("setPointB")
-            let view = CustomViewB(frame: CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height))
-            view.delegate = self
-            view.myClosure = { [weak self] in
-                self?.pointB = "pointB \n \(self?.tempCoor ?? "") \n Adress: \(self?.tempAdress ?? "") \n AQI: \(self?.tempAQI ?? "")"
+            let viewB = CustomViewB(frame: viewFrame)
+            viewB.delegate = self
+            viewB.myClosure = { [weak self] in
+                self?.pointB = "point b \n \(self?.tempInfo.getInfoString() ?? "")"
             }
-            showCustomViewB(view)
+            showCustomView(viewB)
             
         case BUTTON_NAME.CUSTOM_VIEW_A.CLEAR:
             pointA = nil
             pointB = nil
-            showCustomViewA()
+            showCustomView(CustomViewA(frame: viewFrame))
+            
         case BUTTON_NAME.CUSTOM_VIEW_B.SET:
-            print("b")
+            print("b Set")
             
             if let _ = pointA, let _ = pointB {
-                showCustomViewC()
+                showCustomView(CustomViewC(frame: viewFrame))
             } else {
-                showCustomViewA()
+                showCustomView(CustomViewA(frame: viewFrame))
             }
             
         case BUTTON_NAME.CUSTOM_VIEW_C.BACK:
             pointA = nil
             pointB = nil
-            showCustomViewA()
+            showCustomView(CustomViewA(frame: viewFrame))
+            
         default:
             print("default")
         }
@@ -125,45 +122,50 @@ extension ViewController: CustomViewProtocol {
 
 // MARK: fileprivate, view 제어
 extension ViewController {
-    fileprivate func showCustomViewA() {
-        let viewA = CustomViewA(frame: CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height))
-        UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
-            self.view.addSubview(viewA)
-        }) { [weak self] _ in
-            self?.updateViewLabel(viewA)
-        }
-        viewA.delegate = self
+    fileprivate func showCustomView(_ v: AnyObject) {
         
-    }
-    
-    fileprivate func showCustomViewB(_ view: CustomViewB) {
-        UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
-            self.view.addSubview(view)
-        }) { [weak self] _ in
-            view.addSubview((self?.mapView!)!)
-        }
-    }
-    
-    fileprivate func showCustomViewC() {
-        let viewC = CustomViewC(frame: CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height))
-        UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
-            self.view.addSubview(viewC)
-        }) { [weak self] _ in
-            self?.updateViewLabel(viewC)
-        }
-        viewC.delegate = self
-    }
-    
-    fileprivate func updateViewLabel(_ view: AnyObject) {
-        if view is CustomViewA {
-            let v = view as! CustomViewA
-            v.pointALabel.text = self.pointA ?? "point a"
-            v.pointBLabel.text = self.pointB ?? "point b"
+        if v is CustomViewA {
+            let viewA = v as! CustomViewA
+            UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+                self.view.addSubview(viewA)
+            }) { [weak self] _ in
+                self?.updateViewLabel(viewA)
+            }
+            viewA.delegate = self
+            
+        } else if v is CustomViewB {
+            let viewB = v as! CustomViewB
+            UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+                self.view.addSubview(viewB)
+            }) { [weak self] _ in
+                viewB.addSubview((self?.mapView!)!)
+            }
+            
+        } else if v is CustomViewC {
+            let viewC = v as! CustomViewC
+            UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+                self.view.addSubview(viewC)
+            }) { [weak self] _ in
+                self?.updateViewLabel(viewC)
+            }
+            viewC.delegate = self
+            
         } else {
-            // view is CustomViewC
-            let v = view as! CustomViewC
-            v.pointALabel.text = self.pointA ?? "값 전달 체크"
-            v.pointBLabel.text = self.pointB ?? "값 전달 체크"
+            print("showCustomview - else")
+        }
+    }
+    
+    fileprivate func updateViewLabel(_ v: AnyObject) {
+        if v is CustomViewA {
+            let view = v as! CustomViewA
+            view.pointALabel.text = self.pointA ?? "point a"
+            view.pointBLabel.text = self.pointB ?? "point b"
+        } else if v is CustomViewC{
+            let view = v as! CustomViewC
+            view.pointALabel.text = self.pointA ?? "값 전달 체크"
+            view.pointBLabel.text = self.pointB ?? "값 전달 체크"
+        } else {
+            print("updateViewLabel - else")
         }
     }
 }
@@ -179,7 +181,8 @@ extension ViewController: GMSMapViewDelegate {
         print("lat: \(mapMarker.position.latitude) long: \(mapMarker.position.longitude)")
         let lat = mapMarker.position.latitude as Double
         let long = mapMarker.position.longitude as Double
-        tempCoor = "lat: \(lat)\n long: \(long)"
+        
+        self.tempInfo.coor = "lat: \(lat)\n long: \(long)"
         
         MyAlamofireManager.shared.getLocationInfo(latitude: lat, longitude: long) { [weak self] result in
             print(type(of: result))     // Array<JSON>
@@ -191,13 +194,19 @@ extension ViewController: GMSMapViewDelegate {
             }
             let str = "\(sorted[1]["name"]) \(sorted[0]["name"])"
             print(str)
-            self?.tempAdress = str
+
+            self?.tempInfo.adress = str
+            self?.mapMarker.title = str
         }
         
         MyAlamofireManager.shared.getLocationAQI(latitude: lat, longitude: long) { [weak self] result in
             print(type(of: result))     // JSON
             print("aqi: \(result)")
-            self?.tempAQI = "\(result)"
+            
+            self?.tempInfo.AQI = "\(result)"
+            self?.mapMarker.snippet = "AQI: \(result)"
         }
     }
 }
+
+
