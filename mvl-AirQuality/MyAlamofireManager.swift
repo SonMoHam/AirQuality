@@ -34,20 +34,22 @@ final class MyAlamofireManager {  // 오버라이드 금지, 재정의 필요 �
         }
     }
     
-    func getLocationAdressRx(latitude: Double, longitude: Double) -> Observable<String> {
+    func getLocationAdressRx(latitude: Double, longitude: Double) -> Observable<Array<JSON>> {
         return Observable.create { (emitter) -> Disposable in
             
             self.getLocationInfo(latitude: latitude, longitude: longitude) { result in
-                let sorted = result.sorted { (first, second) -> Bool in
-                    return first["order"].intValue > second["order"].intValue
-                }
-                sorted.forEach {
-                    print($0["order"], terminator: ", ")
-                }
-                let str = "\(sorted[1]["name"]) \(sorted[0]["name"])"
-                print(str)
-                
-                emitter.onNext(str)
+                emitter.onNext(result)
+                emitter.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func getLocationAQIRx(latitude: Double, longitude: Double) -> Observable<JSON> {
+        return Observable.create { (emitter) -> Disposable in
+            
+            self.getLocationAQI(latitude: latitude, longitude: longitude) { result in
+                emitter.onNext(result)
                 emitter.onCompleted()
             }
             return Disposables.create()

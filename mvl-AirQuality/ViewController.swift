@@ -13,11 +13,11 @@ import RxSwift
 import RxCocoa
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-
+    
     var locationManager: CLLocationManager!
     let mapMarker = GMSMarker()
     var mapView: GMSMapView?
-    
+    var disposeBag = DisposeBag()
     var pointA: String?
     var pointB: String?
     var tempInfo: LocationInfo = LocationInfo()
@@ -25,7 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         
         configLocationManager()
         // 위, 경도 가져오기
@@ -42,11 +42,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // 마커 세팅
         mapMarker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         mapMarker.map = mapView
+        
+        // 타이틀, 스니펫 띄우기
+        mapView?.selectedMarker = mapMarker
         let viewFrame = CGRect(x: 0, y: 0, width: self.view.layer.bounds.width, height: self.view.layer.bounds.height)
         showCustomView(CustomViewA(frame: viewFrame))
     }
     
-    // MARK: - fileprivate func
+    // MARK: - fileprivate func - config
     fileprivate func configLocationManager() {
         // 현재 위치 가져오기
         locationManager = CLLocationManager()
@@ -120,7 +123,7 @@ extension ViewController: CustomViewProtocol {
     }
 }
 
-// MARK: fileprivate, view 제어
+// MARK: fileprivate
 extension ViewController {
     fileprivate func showCustomView(_ v: AnyObject) {
         
@@ -168,6 +171,7 @@ extension ViewController {
             print("updateViewLabel - else")
         }
     }
+    
 }
 
 // MARK: - GMSMapViewDelegate
@@ -184,28 +188,46 @@ extension ViewController: GMSMapViewDelegate {
         
         self.tempInfo.coor = "lat: \(lat)\n long: \(long)"
         
-        MyAlamofireManager.shared.getLocationInfo(latitude: lat, longitude: long) { [weak self] result in
-            print(type(of: result))     // Array<JSON>
-            let sorted = result.sorted { (first, second) -> Bool in
-                return first["order"].intValue > second["order"].intValue
-            }
-            sorted.forEach {
-                print($0["order"], terminator: ", ")
-            }
-            let str = "\(sorted[1]["name"]) \(sorted[0]["name"])"
-            print(str)
-
-            self?.tempInfo.adress = str
-            self?.mapMarker.title = str
-        }
+        MyAlamofireManager.shared.getLocationAdressRx(latitude: lat, longitude: long)
+            .map { $0.sorted{ $0["order"].intValue > $1["order"].intValue }}
+            .map { "\($0[1]["name"]) \($0[0]["name"])" }
+            .subscribe(onNext: { [weak self] (result) in
+                print(result)
+                self?.tempInfo.adress = result
+                self?.mapMarker.title = result
+            })
+            .disposed(by: disposeBag)
         
-        MyAlamofireManager.shared.getLocationAQI(latitude: lat, longitude: long) { [weak self] result in
-            print(type(of: result))     // JSON
-            print("aqi: \(result)")
-            
-            self?.tempInfo.AQI = "\(result)"
-            self?.mapMarker.snippet = "AQI: \(result)"
-        }
+        MyAlamofireManager.shared.getLocationAQIRx(latitude: lat, longitude: long)
+            .subscribe(onNext: { [weak self] (result) in
+                print("aqi: \(result)")
+                self?.tempInfo.AQI = "\(result)"
+                self?.mapMarker.snippet = "AQI: \(result)"
+            })
+            .disposed(by: disposeBag)
+        
+        //        MyAlamofireManager.shared.getLocationAQI(latitude: lat, longitude: long) { [weak self] result in
+        //            print(type(of: result))     // JSON
+        //            print("aqi: \(result)")
+        //
+        //            self?.tempInfo.AQI = "\(result)"
+        //            self?.mapMarker.snippet = "AQI: \(result)"
+        //        }
+        
+        //        MyAlamofireManager.shared.getLocationInfo(latitude: lat, longitude: long) { [weak self] result in
+        //            print(type(of: result))     // Array<JSON>
+        //            let sorted = result.sorted { (first, second) -> Bool in
+        //                return first["order"].intValue > second["order"].intValue
+        //            }
+        //            sorted.forEach {
+        //                print($0["order"], terminator: ", ")
+        //            }
+        //            let str = "\(sorted[1]["name"]) \(sorted[0]["name"])"
+        //            print(str)
+        //
+        //            self?.tempInfo.adress = str
+        //            self?.mapMarker.title = str
+        //        }
     }
 }
 
