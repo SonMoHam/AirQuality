@@ -19,11 +19,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var mapView: GMSMapView?
     var myTableView: UITableView?
     var disposeBag = DisposeBag()
+    
     var pointA: String?
     var pointB: String?
-    var tempInfo: LocationInfo = LocationInfo()
     
-    var list: [String] = []
+    var tempInfo: LocationInfo = LocationInfo()
+    var locationInfos: [LocationInfo] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,10 +90,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         myTableView?.dataSource = self
 
         myTableView?.translatesAutoresizingMaskIntoConstraints = false
-//
-//        myTableView?.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-//        myTableView?.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        myTableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         myTableView?.frame = tableFrame
 
     }
@@ -112,7 +110,8 @@ extension ViewController: CustomViewProtocol {
             viewB.myClosure = { [weak self] in
                 let str = self?.tempInfo.getInfoString() ?? ""
                 self?.pointA = "point a \n" + str
-                self?.list.append(str)
+                
+                self?.locationInfos.append(self!.tempInfo)
             }
             showCustomView(viewB)
             
@@ -123,7 +122,8 @@ extension ViewController: CustomViewProtocol {
             viewB.myClosure = { [weak self] in
                 let str = self?.tempInfo.getInfoString() ?? ""
                 self?.pointB = "point b \n" + str
-                self?.list.append(str)
+                
+                self?.locationInfos.append(self!.tempInfo)
             }
             showCustomView(viewB)
             
@@ -152,11 +152,12 @@ extension ViewController: CustomViewProtocol {
     }
 }
 
-// MARK: fileprivate
+// MARK: fileprivate view Control
 extension ViewController {
     fileprivate func showCustomView(_ v: AnyObject) {
+        switch v {
         
-        if v is CustomViewA {
+        case is CustomViewA:
             let viewA = v as! CustomViewA
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.view.addSubview(viewA)
@@ -165,7 +166,7 @@ extension ViewController {
             }
             viewA.delegate = self
             
-        } else if v is CustomViewB {
+        case is CustomViewB:
             let viewB = v as! CustomViewB
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.view.addSubview(viewB)
@@ -175,7 +176,7 @@ extension ViewController {
                 viewB.addSubview((self?.myTableView!)!)
             }
             
-        } else if v is CustomViewC {
+        case is CustomViewC:
             let viewC = v as! CustomViewC
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.view.addSubview(viewC)
@@ -184,21 +185,26 @@ extension ViewController {
             }
             viewC.delegate = self
             
-        } else {
+        default:
             print("showCustomview - else")
         }
     }
     
     fileprivate func updateViewLabel(_ v: AnyObject) {
-        if v is CustomViewA {
+        
+        switch v {
+        
+        case is CustomViewA:
             let view = v as! CustomViewA
             view.pointALabel.text = self.pointA ?? "point a"
             view.pointBLabel.text = self.pointB ?? "point b"
-        } else if v is CustomViewC{
+        
+        case is CustomViewC:
             let view = v as! CustomViewC
             view.pointALabel.text = self.pointA ?? "값 전달 체크"
             view.pointBLabel.text = self.pointB ?? "값 전달 체크"
-        } else {
+        
+        default:
             print("updateViewLabel - else")
         }
     }
@@ -246,22 +252,21 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return locationInfos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = myTableView?.dequeueReusableCell(withIdentifier: "myTableViewCell", for: indexPath) as! MyTableViewCell
-        cell.content = list[indexPath.row]
+        cell.content = locationInfos[indexPath.row].getInfoString()
         cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let content = list[indexPath.row]
+        let locationInfo = locationInfos[indexPath.row]
 
-        let splited = content.split(separator: "\n")
-        let lat = Double(splited[0].split(separator: " ")[1]) ?? 0
-        let long = Double(splited[1].split(separator: " ")[1]) ?? 0
+        let lat = locationInfo.getLatitude()
+        let long = locationInfo.getLongitude()
         
         let cameraPosition = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 16.0)
         mapView?.camera = cameraPosition

@@ -15,4 +15,20 @@ struct LocationInfo {
     func getInfoString() -> String {
         return "\(coor ?? "")\nAdress: \(adress ?? "")\nAQI: \(AQI ?? "")"
     }
+    
+    func getLatitude() -> Double {
+        guard let str = coor else { return 0 }
+        let splited = str.split(separator: "\n")
+        let latitude = Double(splited[0].split(separator: " ")[1]) ?? 0
+
+        return latitude
+    }
+    
+    func getLongitude() -> Double {
+        guard let str = coor else { return 0 }
+        let splited = str.split(separator: "\n")
+        let longitude = Double(splited[1].split(separator: " ")[1]) ?? 0
+
+        return longitude
+    }
 }
