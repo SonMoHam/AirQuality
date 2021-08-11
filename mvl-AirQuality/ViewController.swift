@@ -29,8 +29,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         configLocationManager()
         // 위, 경도 가져오기
         let coor = locationManager.location?.coordinate
