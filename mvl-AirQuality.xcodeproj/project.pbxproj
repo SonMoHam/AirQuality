@@ -18,6 +18,7 @@
 		1264A4D126BDFA9B0081AFF7 /* CustomViewC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264A4D026BDFA9B0081AFF7 /* CustomViewC.swift */; };
 		1264A4D426BDFAAA0081AFF7 /* CustomViewC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1264A4D326BDFAAA0081AFF7 /* CustomViewC.xib */; };
 		1265880126BD449C002C7BD8 /* MyAlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1265880026BD449C002C7BD8 /* MyAlamofireManager.swift */; };
+		1268BC6B26C51D46008E0834 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1268BC6A26C51D46008E0834 /* ViewModel.swift */; };
 		12761CAC26BE896000952AEA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12761CAB26BE896000952AEA /* Constants.swift */; };
 		12761CAF26BE8CA700952AEA /* CustomViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12761CAE26BE8CA700952AEA /* CustomViewProtocol.swift */; };
 		12F9FAC226BC114F00A6A7A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F9FAC126BC114F00A6A7A1 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		1264A4D026BDFA9B0081AFF7 /* CustomViewC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewC.swift; sourceTree = "<group>"; };
 		1264A4D326BDFAAA0081AFF7 /* CustomViewC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomViewC.xib; sourceTree = "<group>"; };
 		1265880026BD449C002C7BD8 /* MyAlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlamofireManager.swift; sourceTree = "<group>"; };
+		1268BC6A26C51D46008E0834 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		12761CAB26BE896000952AEA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		12761CAE26BE8CA700952AEA /* CustomViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewProtocol.swift; sourceTree = "<group>"; };
 		12F9FABE26BC114F00A6A7A1 /* mvl-AirQuality.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mvl-AirQuality.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +127,7 @@
 				120DA83226C2521600176FBE /* Model.swift */,
 				120DA83926C27F2000176FBE /* MyTableViewCell.xib */,
 				120DA83C26C27F2C00176FBE /* MyTableViewCell.swift */,
+				1268BC6A26C51D46008E0834 /* ViewModel.swift */,
 			);
 			path = "mvl-AirQuality";
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				1264A4C826BDEEA30081AFF7 /* CustomViewA.swift in Sources */,
 				12761CAF26BE8CA700952AEA /* CustomViewProtocol.swift in Sources */,
 				120DA83D26C27F2C00176FBE /* MyTableViewCell.swift in Sources */,
+				1268BC6B26C51D46008E0834 /* ViewModel.swift in Sources */,
 				1264A4CE26BDF4890081AFF7 /* CustomViewB.swift in Sources */,
 				12F9FAC426BC114F00A6A7A1 /* SceneDelegate.swift in Sources */,
 				126026E526BFC188006057E2 /* LocationRouter.swift in Sources */,

@@ -12,6 +12,14 @@ struct LocationInfo {
     var adress: String?
     var AQI: String?
     
+    func isHasNil() -> Bool {
+        if coor != nil && adress != nil && AQI != nil {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func getInfoString() -> String {
         return "\(coor ?? "")\nAdress: \(adress ?? "")\nAQI: \(AQI ?? "")"
     }

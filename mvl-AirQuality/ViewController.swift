@@ -10,7 +10,6 @@ import GoogleMaps
 import CoreLocation
 import MapKit
 import RxSwift
-import RxCocoa
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -18,20 +17,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let mapMarker = GMSMarker()
     var mapView: GMSMapView?
     var myTableView: UITableView?
-    var disposeBag = DisposeBag()
     
-    var pointA: String?
-    var pointB: String?
-    
-    var tempInfo: LocationInfo = LocationInfo()
-    var locationInfos: [LocationInfo] = []
+    let viewModel = ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configLocationManager()
-        // 위, 경도 가져오기
-        let coor = locationManager.location?.coordinate
+        // 현재 위치 위, 경도 가져오기
+        //        let coor = locationManager.location?.coordinate
         //                let latitude = (coor?.latitude ?? 37.566508) as Double
         //                let longitude = (coor?.longitude ?? 126.977945) as Double
         
@@ -86,10 +80,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         myTableView?.delegate = self
         myTableView?.dataSource = self
-
+        
         myTableView?.translatesAutoresizingMaskIntoConstraints = false
         myTableView?.frame = tableFrame
-
+        
     }
 }
 
@@ -106,10 +100,12 @@ extension ViewController: CustomViewProtocol {
             let viewB = CustomViewB(frame: viewFrame)
             viewB.delegate = self
             viewB.myClosure = { [weak self] in
-                let str = self?.tempInfo.getInfoString() ?? ""
-                self?.pointA = "point a \n" + str
                 
-                self?.locationInfos.append(self!.tempInfo)
+                guard let info = self?.viewModel.tempInfo else { return  }
+                let str = info.getInfoString()
+                
+                self?.viewModel.pointA = "point a \n" + str
+                self?.viewModel.locationInfos.append(info)
             }
             showCustomView(viewB)
             
@@ -118,30 +114,30 @@ extension ViewController: CustomViewProtocol {
             let viewB = CustomViewB(frame: viewFrame)
             viewB.delegate = self
             viewB.myClosure = { [weak self] in
-                let str = self?.tempInfo.getInfoString() ?? ""
-                self?.pointB = "point b \n" + str
                 
-                self?.locationInfos.append(self!.tempInfo)
+                guard let info = self?.viewModel.tempInfo else { return  }
+                let str = info.getInfoString()
+                
+                self?.viewModel.pointB = "point b \n" + str
+                self?.viewModel.locationInfos.append(info)
             }
             showCustomView(viewB)
             
         case BUTTON_NAME.CUSTOM_VIEW_A.CLEAR:
-            pointA = nil
-            pointB = nil
+            viewModel.clearPoints()
             showCustomView(CustomViewA(frame: viewFrame))
             
         case BUTTON_NAME.CUSTOM_VIEW_B.SET:
             print("b Set")
-            
-            if let _ = pointA, let _ = pointB {
+
+            if let _ = viewModel.pointA, let _ = viewModel.pointB {
                 showCustomView(CustomViewC(frame: viewFrame))
             } else {
                 showCustomView(CustomViewA(frame: viewFrame))
             }
             
         case BUTTON_NAME.CUSTOM_VIEW_C.BACK:
-            pointA = nil
-            pointB = nil
+            viewModel.clearPoints()
             showCustomView(CustomViewA(frame: viewFrame))
             
         default:
@@ -188,20 +184,22 @@ extension ViewController {
         }
     }
     
+    // -------------
+    
     fileprivate func updateViewLabel(_ v: AnyObject) {
         
         switch v {
         
         case is CustomViewA:
             let view = v as! CustomViewA
-            view.pointALabel.text = self.pointA ?? "point a"
-            view.pointBLabel.text = self.pointB ?? "point b"
-        
+            view.pointALabel.text = viewModel.pointA ?? "point a"
+            view.pointBLabel.text = viewModel.pointB ?? "point b"
+            
         case is CustomViewC:
             let view = v as! CustomViewC
-            view.pointALabel.text = self.pointA ?? "값 전달 체크"
-            view.pointBLabel.text = self.pointB ?? "값 전달 체크"
-        
+            view.pointALabel.text = viewModel.pointA ?? "값 전달 체크"
+            view.pointBLabel.text = viewModel.pointB ?? "값 전달 체크"
+            
         default:
             print("updateViewLabel - else")
         }
@@ -220,26 +218,15 @@ extension ViewController: GMSMapViewDelegate {
         print("lat: \(mapMarker.position.latitude) long: \(mapMarker.position.longitude)")
         let lat = mapMarker.position.latitude as Double
         let long = mapMarker.position.longitude as Double
+
+        viewModel.getLocationInfo(lat: lat, long: long)
+        viewModel.didFinishGetLocationInfo = { [weak self] in
+            
+            guard let info = self?.viewModel.tempInfo else { return  }
+            self?.mapMarker.title = info.adress
+            self?.mapMarker.snippet = "AQI: \(info.AQI!)"
+        }
         
-        self.tempInfo.coor = "lat: \(lat)\nlong: \(long)"
-        
-        MyAlamofireManager.shared.getLocationAdressRx(latitude: lat, longitude: long)
-            .map { $0.sorted{ $0["order"].intValue > $1["order"].intValue }}
-            .map { "\($0[1]["name"]) \($0[0]["name"])" }
-            .subscribe(onNext: { [weak self] (result) in
-                print(result)
-                self?.tempInfo.adress = result
-                self?.mapMarker.title = result
-            })
-            .disposed(by: disposeBag)
-        
-        MyAlamofireManager.shared.getLocationAQIRx(latitude: lat, longitude: long)
-            .subscribe(onNext: { [weak self] (result) in
-                print("aqi: \(result)")
-                self?.tempInfo.AQI = "\(result)"
-                self?.mapMarker.snippet = "AQI: \(result)"
-            })
-            .disposed(by: disposeBag)
     }
 }
 
@@ -250,19 +237,20 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locationInfos.count
+        return viewModel.locationInfos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = myTableView?.dequeueReusableCell(withIdentifier: "myTableViewCell", for: indexPath) as! MyTableViewCell
-        cell.content = locationInfos[indexPath.row].getInfoString()
+        
+        cell.content = viewModel.locationInfos[indexPath.row].getInfoString()
         cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let locationInfo = locationInfos[indexPath.row]
-
+        let locationInfo = viewModel.locationInfos[indexPath.row]
+        
         let lat = locationInfo.getLatitude()
         let long = locationInfo.getLongitude()
         
