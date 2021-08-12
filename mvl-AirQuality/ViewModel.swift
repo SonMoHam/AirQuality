@@ -51,12 +51,20 @@ class ViewModel {
             .disposed(by: self.disposeBag)
     }
     
+    func getPointA() -> String {
+        return pointA ?? "point a"
+    }
+    
     func setPointA(content: String) {
-        pointA = content
+        pointA = "point a \n" + content
+    }
+    
+    func getPointB() -> String {
+        return pointB ?? "point b"
     }
     
     func setPointB(content: String) {
-        pointB = content
+        pointB = "point b \n" + content
     }
     
     func clearPoints() {

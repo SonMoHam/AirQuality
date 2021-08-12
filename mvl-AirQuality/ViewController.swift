@@ -19,6 +19,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var myTableView: UITableView?
     
     let viewModel = ViewModel()
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +86,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         myTableView?.frame = tableFrame
         
     }
+    
+    fileprivate func bindViewModel() {
+        
+    }
 }
 
 // MARK: - CustomViewProtocol 
@@ -104,7 +109,7 @@ extension ViewController: CustomViewProtocol {
                 guard let info = self?.viewModel.tempInfo else { return  }
                 let str = info.getInfoString()
                 
-                self?.viewModel.pointA = "point a \n" + str
+                self?.viewModel.setPointA(content: str)
                 self?.viewModel.locationInfos.append(info)
             }
             showCustomView(viewB)
@@ -117,8 +122,8 @@ extension ViewController: CustomViewProtocol {
                 
                 guard let info = self?.viewModel.tempInfo else { return  }
                 let str = info.getInfoString()
-                
-                self?.viewModel.pointB = "point b \n" + str
+
+                self?.viewModel.setPointB(content: str)
                 self?.viewModel.locationInfos.append(info)
             }
             showCustomView(viewB)
@@ -192,13 +197,13 @@ extension ViewController {
         
         case is CustomViewA:
             let view = v as! CustomViewA
-            view.pointALabel.text = viewModel.pointA ?? "point a"
-            view.pointBLabel.text = viewModel.pointB ?? "point b"
+            view.pointALabel.text = viewModel.getPointA()
+            view.pointBLabel.text = viewModel.getPointB()
             
         case is CustomViewC:
             let view = v as! CustomViewC
-            view.pointALabel.text = viewModel.pointA ?? "값 전달 체크"
-            view.pointBLabel.text = viewModel.pointB ?? "값 전달 체크"
+            view.pointALabel.text = viewModel.getPointA()
+            view.pointBLabel.text = viewModel.getPointB()
             
         default:
             print("updateViewLabel - else")
