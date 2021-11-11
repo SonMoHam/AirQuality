@@ -1,7 +1,7 @@
-# AirQuality
+# 공기질 조회 앱
  <img width="833" alt="스크린샷 2021-11-11 오후 3 49 34" src="https://user-images.githubusercontent.com/73145656/141251329-153cd06c-1c72-40ef-a9c5-0a221a831613.png">
 
-Google Maps SDK, Open API 활용한 공기질 조회 앱
+Google Maps SDK, Open API 활용
 
 view1
 - point A, point B 버튼을 클릭해 view2로 이동
