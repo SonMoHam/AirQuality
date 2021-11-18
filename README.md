@@ -10,9 +10,8 @@ view1
 
 view2
 - 맵뷰 가운데에 위치한 마커에 해당하는 지역의 주소와 공기질을 출력
-- Set 버튼 클릭 시 출력값 저장
-- point A 또는 point B에 값 배정
-- 배정 후 point A, point B 모두 값이 있을 경우 view3으로 이동, 아닐 경우 view1로 이동
+- Set 버튼 클릭 시 마커가 위치한 지역의 주소, 공기질 등을 point A 또는 point B에 저장
+- Set 버튼 클릭 시 point A, point B 모두 값이 있을 경우 view3으로 이동, 아닐 경우 view1로 이동
 
 view3
 - point A, point B 라벨에 설정한 값 ( 위경도, 주소, 공기질) 표시
